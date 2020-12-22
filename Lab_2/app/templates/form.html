@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1 class="my-5">Параметры формы</h1>
+
+<form method="POST">
+
+    <div class="form-group">
+        <label for="theme">Тема</label>
+        <input type="text" id="theme" name="theme" class="form-control" {% if request.method == 'POST' %}value="{{ request.form.get('theme') }}"{% else %}placeholder="Тема"{% endif %}>
+    </div>
+
+    <div class="form-group">
+        <label for="msg">Сообщение</label>
+        <textarea name="msg" id="msg" cols="30" rows="10" class="form-control" {% if request.method == 'GET'%}placeholder="Сообщение"{% endif %}>{% if request.method == 'POST' %}{{ request.form.get('msg') }}{% endif %}</textarea>
+    </div>
+
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </div>
+
+</form>
+
+{% if request.method == 'POST' %}
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Значение</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for name, value in request.form.items() %}
+        <tr>
+            <td>{{ name }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endif %}
+
+{% endblock %}
